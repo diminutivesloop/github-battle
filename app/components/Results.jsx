@@ -4,6 +4,7 @@ import { FaBriefcase, FaCompass, FaUser, FaUserFriends } from "react-icons/fa";
 import { battle } from "../utils/api";
 import Card from "./Card";
 import Loading from "./Loading";
+import Tooltip from "./Tooltip";
 
 export function ProfileList({ profile }) {
   return (
@@ -13,16 +14,20 @@ export function ProfileList({ profile }) {
         {profile.name}
       </li>
       {profile.location && (
-        <li>
-          <FaCompass color="rgb(144, 115, 255)" size={22} />
-          {profile.location}
-        </li>
+        <Tooltip text="User's location">
+          <li>
+            <FaCompass color="rgb(144, 115, 255)" size={22} />
+            {profile.location}
+          </li>
+        </Tooltip>
       )}
       {profile.company && (
-        <li>
-          <FaBriefcase color="#795548" size={22} />
-          {profile.company}
-        </li>
+        <Tooltip text="User's company">
+          <li>
+            <FaBriefcase color="#795548" size={22} />
+            {profile.company}
+          </li>
+        </Tooltip>
       )}
       <li>
         <FaUser color="rgb(129, 195, 245)" size={22} />
