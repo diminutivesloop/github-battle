@@ -112,6 +112,11 @@ li {
   border-radius: 3px;
 }
 
+.bg-dark {
+  background: rgb(36, 40, 42);
+  border-radius: 3px;
+}
+
 .card {
   margin: 10px 0;
   width: 250px;
@@ -187,6 +192,21 @@ li {
 .player-inputs button {
   flex: 1;
   margin-left: 10px;
+}
+
+.player-inputs .input-dark {
+  color: #dadada;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.btn-light {
+  color: #000;
+  background: #aaa8a8;
+}
+
+.btn-light:disabled {
+  background: #292929;
+  color: #4a4a4a;
 }
 
 .btn {
