@@ -7,6 +7,7 @@ import Popular from "./components/Popular";
 import Battle from "./components/Battle";
 import { ThemeProvider } from "./contexts/theme";
 import Nav from "./components/nav";
+import Results from "./components/Results";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends React.Component {
               <Routes>
                 <Route path="/" element={<Popular />} />
                 <Route path="/battle" element={<Battle />} />
+                <Route path="/battle/results" element={<Results />} />
               </Routes>
             </div>
           </div>

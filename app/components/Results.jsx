@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FaBriefcase, FaCompass, FaUser, FaUserFriends } from "react-icons/fa";
 import { battle } from "../utils/api";
@@ -41,11 +42,15 @@ export function ProfileList({ profile }) {
   );
 }
 
-export default function Results({ playerOne, playerTwo, onReset }) {
+export default function Results() {
   const [winner, setWinner] = useState();
   const [loser, setLoser] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [searchParams] = useSearchParams();
+  const playerOne = searchParams.get("playerOne");
+  const playerTwo = searchParams.get("playerTwo");
 
   useEffect(() => {
     battle([playerOne, playerTwo])
@@ -91,15 +96,9 @@ export default function Results({ playerOne, playerTwo, onReset }) {
         </Card>
         <div></div>
       </div>
-      <button onClick={onReset} className="btn dark-btn btn-space">
+      <Link to="/battle" className="btn dark-btn btn-space">
         Reset
-      </button>
+      </Link>
     </React.Fragment>
   );
 }
-
-Results.propTypes = {
-  playerOne: PropTypes.string.isRequired,
-  playerTwo: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired,
-};
