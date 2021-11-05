@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaBriefcase, FaCompass, FaUser, FaUserFriends } from "react-icons/fa";
 import { battle } from "../utils/api";
@@ -41,77 +41,61 @@ export function ProfileList({ profile }) {
   );
 }
 
-export default class Results extends React.Component {
-  constructor(props) {
-    super(props);
+export default function Results({ playerOne, playerTwo, onReset }) {
+  const [winner, setWinner] = useState();
+  const [loser, setLoser] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
 
-    this.state = {
-      winner: null,
-      loser: null,
-      error: null,
-      loading: true,
-    };
-  }
-
-  componentDidMount() {
-    const { playerOne, playerTwo } = this.props;
-
+  useEffect(() => {
     battle([playerOne, playerTwo])
       .then((players) => {
-        this.setState({
-          winner: players[0],
-          loser: players[1],
-          error: null,
-          loading: false,
-        });
+        setWinner(players[0]);
+        setLoser(players[1]);
+        setError(null);
+        setLoading(false);
       })
       .catch(({ message }) => {
-        this.setState({
-          error: message,
-          loading: false,
-        });
+        setError(message);
+        setLoading(false);
       });
+  }, [playerOne, playerTwo]);
+
+  if (loading) {
+    return <Loading />;
   }
 
-  render() {
-    const { winner, loser, error, loading } = this.state;
-
-    if (loading) {
-      return <Loading />;
-    }
-
-    if (error) {
-      return <p className="error center-text">{error}</p>;
-    }
-    return (
-      <React.Fragment>
-        <div className="grid space-around container-sm">
-          <Card
-            header={winner.score === loser.score ? "Tie" : "Winner"}
-            subheader={`Score: ${winner.score.toLocaleString()}`}
-            avatar={winner.profile.avatar_url}
-            href={winner.profile.html_url}
-            name={winner.profile.login}
-          >
-            <ProfileList profile={winner.profile} />
-          </Card>
-          <Card
-            header={winner.score === loser.score ? "Tie" : "Loser"}
-            subheader={`Score: ${loser.score.toLocaleString()}`}
-            avatar={loser.profile.avatar_url}
-            href={loser.profile.html_url}
-            name={loser.profile.login}
-          >
-            <ProfileList profile={loser.profile} />
-          </Card>
-          <div></div>
-        </div>
-        <button onClick={this.props.onReset} className="btn dark-btn btn-space">
-          Reset
-        </button>
-      </React.Fragment>
-    );
+  if (error) {
+    return <p className="error center-text">{error}</p>;
   }
+  return (
+    <React.Fragment>
+      <div className="grid space-around container-sm">
+        <Card
+          header={winner.score === loser.score ? "Tie" : "Winner"}
+          subheader={`Score: ${winner.score.toLocaleString()}`}
+          avatar={winner.profile.avatar_url}
+          href={winner.profile.html_url}
+          name={winner.profile.login}
+        >
+          <ProfileList profile={winner.profile} />
+        </Card>
+        <Card
+          header={winner.score === loser.score ? "Tie" : "Loser"}
+          subheader={`Score: ${loser.score.toLocaleString()}`}
+          avatar={loser.profile.avatar_url}
+          href={loser.profile.html_url}
+          name={loser.profile.login}
+        >
+          <ProfileList profile={loser.profile} />
+        </Card>
+        <div></div>
+      </div>
+      <button onClick={onReset} className="btn dark-btn btn-space">
+        Reset
+      </button>
+    </React.Fragment>
+  );
 }
 
 Results.propTypes = {
