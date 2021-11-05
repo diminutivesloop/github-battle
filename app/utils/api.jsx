@@ -1,3 +1,6 @@
+const PAT = "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";
+const headers = new Headers({ Authorization: `token ${PAT}` });
+
 function getErrorMessage(message, username) {
   if ((message = "Not Found")) {
     return `${username} doesn't exist`;
@@ -7,7 +10,7 @@ function getErrorMessage(message, username) {
 }
 
 function getProfile(username) {
-  return fetch(`https://api.github.com/users/${username}`)
+  return fetch(`https://api.github.com/users/${username}`, { headers })
     .then((res) => res.json())
     .then((profile) => {
       if (profile.message) {
@@ -19,7 +22,9 @@ function getProfile(username) {
 }
 
 function getRepos(username) {
-  return fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+  return fetch(`https://api.github.com/users/${username}/repos?per_page=100`, {
+    headers,
+  })
     .then((res) => res.json())
     .then((repos) => {
       if (repos.message) {
