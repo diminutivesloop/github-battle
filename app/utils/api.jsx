@@ -1,4 +1,5 @@
-const PAT = "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";
+// TODO: load github PAT from env
+const PAT = "";
 const headers = new Headers({ Authorization: `token ${PAT}` });
 
 function getErrorMessage(message, username) {
