@@ -1,12 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fetchPopularRepos } from "../utils/api";
-import {
-  FaUser,
-  FaStar,
-  FaCodeBranch,
-  FaExclamationTriangle,
-} from "react-icons/fa";
+import { FaUser, FaStar, FaCodeBranch } from "react-icons/fa";
 import Card from "./Card";
 import Loading from "./Loading";
 import Tooltip from "./Tooltip";
@@ -85,18 +80,11 @@ ReposGrid.propTypes = {
 };
 
 export default class Popular extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedLanguage: "All",
-      repos: {},
-      error: null,
-    };
-
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = {
+    selectedLanguage: "All",
+    repos: {},
+    error: null,
+  };
 
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
@@ -141,7 +129,7 @@ export default class Popular extends React.Component {
       <>
         <LanguagesNav
           selected={selectedLanguage}
-          onUpdateLanguage={this.updateLanguage}
+          onUpdateLanguage={this.updateLanguage.bind(this)}
         />
 
         {this.isLoading() && <Loading text="Fetching Repos" />}

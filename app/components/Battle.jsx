@@ -6,7 +6,6 @@ import {
   FaTimesCircle,
 } from "react-icons/fa";
 import PropTypes from "prop-types";
-import Results from "./Results";
 import { ThemeConsumer } from "../contexts/theme";
 import { Link } from "react-router-dom";
 
@@ -49,16 +48,14 @@ function Instructions() {
 }
 
 class PlayerInput extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    username: "",
+  };
 
-    this.state = {
-      username: "",
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+  };
 
   handleSubmit(event) {
     event.preventDefault();
@@ -76,7 +73,10 @@ class PlayerInput extends React.Component {
     return (
       <ThemeConsumer>
         {({ theme }) => (
-          <form className="column player" onSubmit={this.handleSubmit}>
+          <form
+            className="column player"
+            onSubmit={this.handleSubmit.bind(this)}
+          >
             <label htmlFor="username" className="player-label">
               {this.props.label}
             </label>
@@ -88,7 +88,7 @@ class PlayerInput extends React.Component {
                 placeholder="github username"
                 autoComplete="off"
                 value={this.state.username}
-                onChange={this.handleChange}
+                onChange={this.handleChange.bind(this)}
               />
               <button
                 className={`btn ${theme === "dark" ? "btn-light" : "btn-dark"}`}
@@ -104,11 +104,6 @@ class PlayerInput extends React.Component {
     );
   }
 }
-
-PlayerInput.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-};
 
 function PlayerPreview({ username, onReset, label }) {
   return (
@@ -138,17 +133,10 @@ function PlayerPreview({ username, onReset, label }) {
 }
 
 export default class Battle extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      playerOne: null,
-      playerTwo: null,
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-  }
+  state = {
+    playerOne: null,
+    playerTwo: null,
+  };
 
   handleSubmit(id, player) {
     this.setState({
