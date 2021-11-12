@@ -5,11 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { ThemeProvider } from "./contexts/theme";
 import Nav from "./components/nav";
-import Loading from "./components/Loading";
+import Loading from "./components/loading";
 
-const Popular = React.lazy(() => import("./components/Popular"));
-const Battle = React.lazy(() => import("./components/Battle"));
-const Results = React.lazy(() => import("./components/Results"));
+const Popular = React.lazy(() => import("./components/popular"));
+const Battle = React.lazy(() => import("./components/battle"));
+const Results = React.lazy(() => import("./components/results"));
 
 class App extends React.Component {
   state = {

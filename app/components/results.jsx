@@ -3,9 +3,9 @@ import { Link, useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FaBriefcase, FaCompass, FaUser, FaUserFriends } from "react-icons/fa";
 import { battle } from "../utils/api";
-import Card from "./Card";
-import Loading from "./Loading";
-import Tooltip from "./Tooltip";
+import Card from "./card";
+import Loading from "./loading";
+import Tooltip from "./tooltip";
 
 export function ProfileList({ profile }) {
   return (
