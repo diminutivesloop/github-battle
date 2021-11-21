@@ -1,6 +1,10 @@
-// TODO: load github PAT from env
-const PAT = "";
-const headers = new Headers({ Authorization: `token ${PAT}` });
+const tokenKey = "gh-token";
+let token = localStorage.getItem(tokenKey);
+if (!token) {
+  token = window.prompt("Enter your GitHub API personal access token.");
+  localStorage.setItem(tokenKey, token);
+}
+const headers = new Headers({ Authorization: `token ${token}` });
 
 function getErrorMessage(message, username) {
   if ((message = "Not Found")) {
